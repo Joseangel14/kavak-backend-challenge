@@ -1,0 +1,15 @@
+fastapi
+uvicorn
+pymongo
+psycopg2
+pytest
+httpx
+sqlalchemy
+asyncpg
+pydantic
+python-jose[cryptography]
+passlib[bcrypt]
+python-multipart
+pandas
+scikit-learn
+joblib

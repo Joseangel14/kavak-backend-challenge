@@ -1,0 +1,31 @@
+services:
+  app:
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    command: ["sh", "-c", "sleep 10 && uvicorn app.main:app --host 0.0.0.0 --port 8000"]
+    environment:
+      DATABASE_URL: "postgresql://kavak_user:kavak_password@db:5432/kavak_db"
+      TESTING: "0"  # Modo producción
+
+  db:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: kavak_user
+      POSTGRES_PASSWORD: kavak_password
+      POSTGRES_DB: kavak_db
+    ports:
+      - "5433:5432"
+
+  tests:
+    build:
+      context: .
+    depends_on:
+      - db
+    command: ["sh", "-c", "pytest"]  # Comando para ejecutar pruebas
+    environment:
+      DATABASE_URL: "postgresql://kavak_user:kavak_password@db:5432/kavak_db"
+      TESTING: "1"  # Activar modo pruebas
