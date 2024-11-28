@@ -8,11 +8,12 @@ services:
       - db
     command: ["sh", "-c", "sleep 10 && uvicorn app.main:app --host 0.0.0.0 --port 8000"]
     environment:
-      DATABASE_URL: "postgresql://kavak_user:kavak_password@db:5432/kavak_db"
+      DATABASE_URL: "postgresql://kavak_user:kavak_password@kavakchallenge-db-1:5432/kavak_db"
       TESTING: "0"  # Modo producción
 
   db:
-    image: postgres:14
+    image: postgres:17
+    container_name: kavakchallenge-db-1  # Nombre explícito del contenedor
     environment:
       POSTGRES_USER: kavak_user
       POSTGRES_PASSWORD: kavak_password
@@ -25,7 +26,7 @@ services:
       context: .
     depends_on:
       - db
-    command: ["sh", "-c", "pytest"]  # Comando para ejecutar pruebas
+    command: ["sh", "-c", "pytest"]
     environment:
-      DATABASE_URL: "postgresql://kavak_user:kavak_password@db:5432/kavak_db"
+      DATABASE_URL: "postgresql://kavak_user:kavak_password@kavakchallenge-db-1:5432/kavak_db"
       TESTING: "1"  # Activar modo pruebas

@@ -56,20 +56,22 @@ Este proyecto implementa un modelo de predicción de aprobación de créditos ut
 
 # 1. **Clonar el Repositorio**
 git clone <URL_DEL_REPOSITORIO>
+
 cd <NOMBRE_DEL_REPOSITORIO>
 
-# 2. **Configurar el Entorno**
-**Crear un archivo .env con las credenciales necesarias para la base de datos**:
-DATABASE_URL=postgresql://<usuario>:<contraseña>@<host>:<puerto>/<base_de_datos>
+# 2. Configurar el Entorno
+⚠️ **Este paso ya no es necesario.**  
+Las credenciales de conexión a la base de datos están configuradas directamente en el archivo docker-compose.yml. No necesitas crear un archivo .env adicional.
 
-La que tiene configurada el proyecto
-DATABASE_URL=postgresql://kavak_user:kavak_password@db:5432/kavak_db
+**Detalles de configuración ya integrados:**
+- **Usuario:** kavak_user
+- **Contraseña:** kavak_password
+- **Host:** kavakchallenge-db-1 (interno al contenedor Docker)
+- **Puerto:** 5432 (puerto estándar de PostgreSQL)
+- **Base de datos:** kavak_db
 
-kavak_user: Nombre de usuario para la base de datos.
-kavak_password: Contraseña para la base de datos.
-db: Nombre del host de la base de datos (interno al contenedor Docker).
-5432: Puerto estándar de PostgreSQL.
-kavak_db: Nombre de la base de datos.
+Puedes continuar directamente con la siguiente sección.
+
 
 **Instalar las dependencias necesarias**:
 pip install -r requirements.txt
@@ -77,15 +79,21 @@ pip install -r requirements.txt
 # 3. **Ejecutar con Docker**:
 docker-compose up --build
 
-# 4. **Acceso a la documentación autogenerada**:
-   - API Documentation (Swagger): [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
-   - API Documentation (ReDoc): [http://127.0.0.1:8000/redoc](http://127.0.0.1:8000/redoc)
+# 4. **Acceso a la Documentación Autogenerada**
+La aplicación incluye documentación autogenerada para consultar todos los endpoints disponibles, sus métodos, parámetros y respuestas.
+
+- **API Documentation (Swagger):** [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)  
+  Aquí encontrarás una interfaz interactiva para probar y explorar todos los endpoints de la API.
+
+- **API Documentation (ReDoc):** [http://127.0.0.1:8000/redoc](http://127.0.0.1:8000/redoc)  
+  Esta vista ofrece una documentación estructurada con detalles de todos los endpoints disponibles en la API.
+
 
 # 5. **¿Cómo entrenar el modelo?**:
 python machine_learning/train_model.py
 
 ---
-## **Project Architecture**
+# **Project Architecture**
 
 ```
 /KAVAKCHALLENGE
@@ -183,6 +191,7 @@ Añadir el token en los encabezados:
 ## **Vehicles**
 - `POST /vehicles/`: Add a new vehicle.
 - `GET /vehicles/`: Retrieve a list of vehicles.
+- `GET /vehicles/with-feedback/`: Retrieve a list of vehicles with feedback.
 - `PUT /vehicles/{id}`: Update vehicle details.
 - `DELETE /vehicles/{id}`: Remove a vehicle from inventory.
 
@@ -194,6 +203,7 @@ Añadir el token en los encabezados:
 - `POST /buyers/`: Add a new buyer.
 - `GET /buyers/`: Retrieve a list of buyers.
 - `GET /buyers/{id}`: Retrieve details of a specific buyer.
+- `GET /buyers/with-credit-applications/`: Retrieve a list of buyers with credit application.
 - `PUT /buyers/{id}`: Update buyer details.
 - `DELETE /buyers/{id}`: Remove a buyer.
 
